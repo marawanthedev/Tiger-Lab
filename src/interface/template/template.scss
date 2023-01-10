@@ -1,0 +1,39 @@
+.template {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+
+  &_fixed {
+    position: fixed;
+  }
+  &_footer-container,
+  &_children-container,
+  &_navbar-container {
+    width: 100%;
+  }
+
+  &_desktop-navbar-container,
+  &_mobile-navbar-container {
+    width: 100%;
+  }
+  &_mobile-navbar-container {
+    display: none;
+  }
+
+  &_navbar-container {
+    align-self: center;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 1024px) {
+  .template {
+    &_desktop-navbar-container {
+      display: none;
+    }
+    &_mobile-navbar-container {
+      display: block;
+    }
+  }
+}

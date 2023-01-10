@@ -1,0 +1,93 @@
+.navigation {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  color: white;
+  &__full {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  &__header {
+    height: 10rem;
+    padding: 0 2rem;
+
+    &__content {
+      width: 62.5%;
+    }
+
+    &__center {
+      font-size: 3rem;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    right: 5rem;
+    top: 4rem;
+    z-index: 7;
+
+    @media (max-width: 280px) {
+      right: 2rem;
+    }
+  }
+
+  &__menu {
+    width: 100%;
+    height: calc(100% - 3.5rem);
+    position: absolute;
+    left: 0;
+    top: 0rem;
+    animation: fadeIn 0.3s ease-in-out forwards;
+    z-index: 6;
+
+    &__btn {
+      margin-bottom: 3rem;
+    }
+
+    &__inner-container {
+      height: 100%;
+      margin-top: 2.5rem;
+    }
+
+    &__links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__link {
+      color: white;
+      text-decoration: none;
+      height: 2.6rem;
+      font-size: 4.5rem;
+      line-height: 130%;
+      font-weight: 700;
+      margin: 4rem 0;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    display: none;
+    opacity: 0;
+  }
+
+  to {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    display: block;
+    opacity: 1;
+  }
+
+  to {
+    display: none;
+    opacity: 0;
+  }
+}

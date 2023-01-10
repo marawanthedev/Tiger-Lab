@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { AxiosMethods } from "../models/AxiosMethods";
+import { AxiosMethods } from "../constants/AxiosMethods";
 
 const client = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
