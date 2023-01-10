@@ -1,0 +1,16 @@
+@mixin background-image {
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &-contain {
+        background-size: contain;
+    }
+
+    &-cover {
+        background-size: cover;
+    }
+}
+
+.background-image {
+    @include background-image;
+}
