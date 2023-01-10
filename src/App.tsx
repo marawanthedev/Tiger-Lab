@@ -1,9 +1,10 @@
-import "./styles.scss";
+import "./App.scss";
 
 export const App = () => {
   return (
-    <>
-      <h1> Base Tiger Lab test</h1>
-    </>
+    <div className="App flex flex-column justify-content-center align-items-center">
+      <div className="app-table">s</div>
+      <div className="app-table">s</div>
+    </div>
   );
 };

@@ -1,0 +1,22 @@
+@import "./sass/main.scss";
+
+htmL {
+  width: 100vw;
+  min-height: 100vh;
+  max-height: auto;
+}
+.App {
+  width: 100%;
+  min-height: 100vh;
+  background-color: red;
+}
+
+body {
+  width: 100%;
+  height: auto;
+}
+.app-table {
+  width: 50%;
+  background-color: yellow;
+  height: 10rem;
+}
