@@ -1,0 +1,51 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-hooks",
+        "@typescript-eslint",
+        "prettier"
+    ],
+    "rules": {
+        // todo be error
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                "types": {
+                    "Bar": "Don't use Bar because it is unsafe",
+                    "Person": {
+                        "message": "Person is too generic!",
+                        "fixWith": "Employee"
+                    },
+                    "Function": false
+                },
+                "extendDefaults": true
+            }
+        ], // to overcome require error at webpack
+        "@typescript-eslint/no-var-requires": 0
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        },
+        "react": {
+            "version": "detect"
+        }
+    }
+}
