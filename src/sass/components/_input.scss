@@ -1,13 +1,19 @@
-.form-input {
+.input-field {
   font-size: 1.2rem;
   font-family: inherit;
-  width: 30rem;
+  width: 40rem;
   padding: 1rem 1rem;
   border-radius: 5px;
   border-color: #14162f;
-  margin: 1rem 0;
+  &_label {
+    margin-bottom: 1rem;
+  }
   &::placeholder {
     font-size: 1.2rem;
     text-transform: uppercase;
+  }
+  &_error {
+    color: red;
+    margin-top: 0.5rem;
   }
 }

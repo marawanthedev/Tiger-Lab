@@ -1,0 +1,22 @@
+.custom-button {
+  border-radius: 6px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: auto;
+  height: 6rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  &__icon {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .disable {
+    opacity: 0.2;
+    display: none;
+  }
+}

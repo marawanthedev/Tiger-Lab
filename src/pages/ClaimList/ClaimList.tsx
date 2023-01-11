@@ -3,7 +3,6 @@ import { request } from "../../lib/axios";
 import { AxiosMethods } from "../../constants/AxiosMethods";
 import { CustomTable } from "../../components";
 import { HeadCell } from "components/CustomTable/constants";
-import { FormInput } from "../../interface";
 
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -32,13 +31,28 @@ export default function ClaimList() {
     setStatus(event.target.value as string);
   };
 
-  async function fetchClaims() {
-    const data = await request({
-      endpoint: "/claims",
-      method: AxiosMethods.GET,
+  function addTotalAmountAttribute(claims: any) {
+    const claimsWithTotalAmount = claims.map((claim: any) => {
+      return {
+        ...claim,
+        totalAmount: Math.round(
+          Number(claim.amount) + Number(claim.processingFee)
+        ),
+      };
     });
+    setClaims(claimsWithTotalAmount);
+  }
+  async function fetchClaims() {
+    try {
+      const data = await request({
+        endpoint: "/claims",
+        method: AxiosMethods.GET,
+      });
 
-    setClaims(data);
+      addTotalAmountAttribute(data);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   const generateTableHead = () => {
@@ -52,6 +66,7 @@ export default function ClaimList() {
         numeric: typeof sampleItem[key] === "number" ? true : false,
       };
     });
+    tableHead.push({ id: "totalAmount", label: "Total Amount", numeric: true });
 
     return tableHead;
   };
@@ -120,15 +135,21 @@ export default function ClaimList() {
   useEffect(() => {
     if (claims) filterClaimsByStatus();
   }, [status]);
+  const mimicId = new Date();
 
   return (
     <div className="claim-list flex flex-column justify-content-center align-items-center">
       <div className="claim-list_tool-bar flex justify-content-between align-items-center">
-        <FormInput
-          label="Search Claims"
-          placeholder="search claims"
-          onChangeCallBack={(value: string) => setSearchValue(value)}
-        />
+        <div className="flex flex-column justify-content-center">
+          <label htmlFor={String(mimicId)}>Search Claims</label>
+          <input
+            id={String(mimicId)}
+            type="text"
+            className="input-field"
+            placeholder="search claims"
+            onChange={(e: any) => setSearchValue(e.target.value)}
+          />
+        </div>
         <div className="custom-table_tool-bar_dropdown">
           <Box sx={{ minWidth: 250 }}>
             <FormControl fullWidth>

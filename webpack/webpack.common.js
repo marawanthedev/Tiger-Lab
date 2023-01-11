@@ -17,9 +17,13 @@ module.exports = {
         },
       },
       {
-        test: /\.(s)css$/,
+        test: /\.scss$/,
         exclude: /node_modules/,
         use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
         test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
