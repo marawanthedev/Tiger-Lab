@@ -73,7 +73,8 @@ export default function ClaimList() {
 
   const getTableItems = () => {
     if (searchValue !== "" || status !== "") return filteredClaims;
-    else return claims;
+    if (claims) return claims;
+    else return [];
   };
   const handleTableRendering = () => {
     if (!claims || !claimsHeads) return;
