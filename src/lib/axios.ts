@@ -17,11 +17,6 @@ interface BaseRequestInfo extends Partial<BaseRequestInfoProp> {
   url: string;
 }
 
-const redirectAfterTwoSeconds = (path: string) => {
-  setTimeout(() => {
-    if (window.location.href !== path) window.location.href = path;
-  }, 2000);
-};
 client.interceptors.request.use(
   (request: any) => request,
   (error: AxiosError) => error
@@ -33,20 +28,6 @@ client.interceptors.response.use(
     return response.data;
   },
   (error: AxiosError) => {
-    if (error.status === 401) {
-      // unauthroized
-      redirectAfterTwoSeconds("/login");
-    }
-    if (error.status === 400) {
-      // bad request
-      redirectAfterTwoSeconds("/");
-    }
-
-    if (error.status === 404) {
-      // not found
-      redirectAfterTwoSeconds("/");
-    }
-
     return Promise.reject(error);
   }
 );
