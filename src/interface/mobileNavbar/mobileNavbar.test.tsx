@@ -19,14 +19,14 @@ describe("mobile navbar works properly", () => {
       </Router>
     );
 
-  test("icon mapping at closed state works properly", async () => {
+  test("icon mapping at closed state works properly", () => {
     renderComponent();
     const iconEl = screen.getByRole("icon");
     expect(iconEl.title).toContain(
       `${mobileNavBarOptions.title}-icon-${IconOptions.tripleBars}`
     );
   });
-  test("icon mapping at opened state works properly", async () => {
+  test("icon mapping at opened state works properly", () => {
     renderComponent(false);
     const iconEl = screen.getByRole("icon");
     expect(iconEl.title).toContain(
@@ -34,7 +34,7 @@ describe("mobile navbar works properly", () => {
     );
   });
 
-  test("links navigate properly", async () => {
+  test("links navigate properly", () => {
     renderComponent(false);
     const links = screen.getAllByTitle(`${mobileNavBarOptions.title}-link`);
 

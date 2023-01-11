@@ -55,7 +55,7 @@ const MobileNavBar = ({
           <div className="navigation__menu__inner-container flex flex-column align-items-center justify-content-center">
             {/* links */}
             <div className="navigation__menu__links">
-              {navLinks.map((link, index) => {
+              {navLinks.map((link:typeof navLinks[0], index:number) => {
                 return (
                   <Link
                     key={index}
