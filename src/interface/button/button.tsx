@@ -37,7 +37,7 @@ const CustomButton = ({
 
   return (
     <button
-      title={`${title}-btn`}
+      title={`${title}`}
       type={type}
       onClick={() => onClick && onClick()}
       className={`custom-button ${className} bg-primary`}
