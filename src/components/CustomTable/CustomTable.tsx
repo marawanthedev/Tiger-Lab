@@ -1,22 +1,25 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Paper from "@mui/material/Paper";
+import {
+  Paper,
+  TableSortLabel,
+  TableRow,
+  TablePagination,
+  TableHead,
+  TableContainer,
+  TableCell,
+  TableBody,
+  Table,
+  Box,
+} from "@mui/material";
 
-interface Data {
-  calories: number;
-  carbs: number;
-  fat: number;
-  name: string;
-  protein: number;
-}
+import {
+  EnhancedTableProps,
+  HeadCell,
+  EnhanceTableProps,
+  Order,
+} from "./constants";
+
+import "./CustomTable.scss";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -27,8 +30,6 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   }
   return 0;
 }
-
-type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof any>(
   order: Order,
@@ -57,44 +58,15 @@ function stableSort<T>(
   return stabilizedThis.map((el) => el[0]);
 }
 
-export interface HeadCell {
-  id: keyof Data;
-  label: string;
-  numeric: boolean;
-}
-
-interface EnhancedTableProps {
-  numSelected: number;
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => void;
-  order: Order;
-  orderBy: string;
-  rowCount: number;
-}
-
-interface EnhanceTableProps {
-  tableItems: any[];
-  tableHeadItems: any[];
-}
-
 export default function EnhancedTable({
   tableHeadItems,
   tableItems,
 }: EnhanceTableProps) {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("calories");
+  const [orderBy, setOrderBy] = React.useState<any>();
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  function renderTableHead() {
-    return tableHeadItems.map((headItem: any, index: number) => {
-      if (index === 0) return <TableCell>{headItem}</TableCell>;
-      else return <TableCell align="right">{headItem}</TableCell>;
-    });
-  }
 
   function renderTableRows() {
     return tableItems.map((row) => (
@@ -110,30 +82,41 @@ export default function EnhancedTable({
     return Object.keys(row).map((key, index: number) => {
       if (index === 0)
         return (
-          <TableCell component="th" scope="row" align="left">
+          <TableCell
+            component="th"
+            scope="row"
+            align="left"
+            style={{ fontSize: "1.4rem" }}
+          >
             {row[key]}
           </TableCell>
         );
-      else return <TableCell align="left">{row[key]}</TableCell>;
+      else
+        return (
+          <TableCell align="left" style={{ fontSize: "1.4rem" }}>
+            {row[key]}
+          </TableCell>
+        );
     });
   }
 
   function EnhancedTableHead(props: EnhancedTableProps) {
     const { order, orderBy, onRequestSort } = props;
     const createSortHandler =
-      (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+      (property: any) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
       };
 
     return (
       <TableHead>
         <TableRow>
-          {tableHeadItems.map((headCell) => (
+          {tableHeadItems.map((headCell: HeadCell) => (
             <TableCell
               key={headCell.id}
               align={headCell.numeric ? "left" : "center"}
               padding={"normal"}
               sortDirection={orderBy === headCell.id ? order : false}
+              style={{ fontSize: "1.4rem" }}
             >
               <TableSortLabel
                 active={orderBy === headCell.id}
@@ -141,13 +124,6 @@ export default function EnhancedTable({
                 onClick={createSortHandler(headCell.id)}
               >
                 {headCell.label}
-                {orderBy === headCell.id ? (
-                  <Box component="span">
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </Box>
-                ) : null}
               </TableSortLabel>
             </TableCell>
           ))}
@@ -158,7 +134,7 @@ export default function EnhancedTable({
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data
+    property: any
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -203,65 +179,68 @@ export default function EnhancedTable({
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableItems.length) : 0;
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={"medium"}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={tableItems.length}
-            />
-            <TableBody>
-              {stableSort(tableItems, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any, index) => {
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-                  console.log(row);
+    <div className="custom-table">
+      <div className="custom-table_content">
+        <Box sx={{ width: "100%" }}>
+          <Paper sx={{ width: "100%", mb: 2 }}>
+            <TableContainer>
+              <Table
+                sx={{ minWidth: 750 }}
+                aria-labelledby="tableTitle"
+                size={"medium"}
+              >
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  rowCount={tableItems.length}
+                />
+                <TableBody>
+                  {stableSort(tableItems, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row: any, index) => {
+                      const isItemSelected = isSelected(row.id);
 
-                  return (
+                      return (
+                        <TableRow
+                          hover
+                          onClick={(event) => handleClick(event, row.id)}
+                          role="row"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.id}
+                          selected={isItemSelected}
+                        >
+                          {getTableRowData(row)}
+                        </TableRow>
+                      );
+                    })}
+                  {emptyRows > 0 && (
                     <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.id)}
-                      role="row"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
+                      style={{
+                        height: 33 * emptyRows,
+                      }}
                     >
-                      {getTableRowData(row)}
+                      <TableCell colSpan={6} />
                     </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 33 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={tableItems.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </Box>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={tableItems.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              style={{ fontSize: "1.4rem" }}
+            />
+          </Paper>
+        </Box>
+      </div>
+    </div>
   );
 }

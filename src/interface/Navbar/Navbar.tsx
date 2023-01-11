@@ -18,7 +18,7 @@ export default function Navbar() {
         </div>
         <div className="navbar_right-side flex flex-colum align-items-center">
           <div className="navbar_right-side__links">
-            <Link to="/claims-list" className="navbar_link">
+            <Link to="/list" className="navbar_link">
               Claim List
             </Link>
             <Link to="/" className="navbar_link">

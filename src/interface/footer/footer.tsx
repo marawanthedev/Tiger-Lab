@@ -23,7 +23,7 @@ const Footer = (): JSX.Element => {
             <h4>Viewing Services</h4>
             <ul>
               <li>
-                <Link to="">Claims List</Link>
+                <Link to="/list">Claims List</Link>
               </li>
             </ul>
           </div>

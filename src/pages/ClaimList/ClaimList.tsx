@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { request } from "../../lib/axios";
 import { AxiosMethods } from "../../constants/AxiosMethods";
 import { CustomTable } from "../../components";
-import { HeadCell } from "../../components/CustomTable/CustomTable";
+import { HeadCell } from "components/CustomTable/constants";
+import { FormInput } from "../../interface";
 
 import "./ClaimList.scss";
 
@@ -19,6 +20,8 @@ function createData(
 export default function ClaimList() {
   const [claims, setClaims] = useState<any>();
   const [claimsHeads, setClaimsHeads] = useState<HeadCell[]>();
+  const [filtedClaims, setFilteredClaims] = useState<any[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
 
   async function fetchClaims() {
     const data = await request({
@@ -47,7 +50,33 @@ export default function ClaimList() {
   const handleTableRendering = () => {
     if (!claims || !claimsHeads) return;
     if (claims && claimsHeads)
-      return <CustomTable tableHeadItems={claimsHeads} tableItems={claims} />;
+      return (
+        <CustomTable
+          tableHeadItems={claimsHeads}
+          tableItems={searchValue === "" ? claims : filtedClaims}
+        />
+      );
+  };
+  const handleTableItemsSearch = () => {
+    // goal
+    // 1- search through  claim id
+    // 2- search through holderName
+    // 3- seach through policy number
+    // if any of those 3 includes search value return it
+
+    const filteredClaims = claims.filter((claim: any) => {
+      if (
+        String(claim.id).toLowerCase().includes(searchValue.toLowerCase()) ||
+        String(claim.policeNumber)
+          .toLowerCase()
+          .includes(searchValue.toLowerCase()) ||
+        String(claim.holder).toLowerCase().includes(searchValue.toLowerCase())
+      ) {
+        return claim;
+      }
+    });
+
+    setFilteredClaims(filteredClaims);
   };
   useEffect(() => {
     fetchClaims();
@@ -56,9 +85,22 @@ export default function ClaimList() {
   useEffect(() => {
     if (claims) setClaimsHeads(generateTableHead());
   }, [claims]);
-
+  useEffect(() => {
+    // only exec if claims were actually fetched
+    if (claims) {
+      handleTableItemsSearch();
+    }
+  }, [searchValue]);
   return (
-    <div className="claim-list flex justify-content-center align-items-center">
+    <div className="claim-list flex flex-column justify-content-center align-items-center">
+      <div className="claim-list_tool-bar flex justify-content-between align-items-center">
+        <FormInput
+          label="Search Claims"
+          placeholder="search claims"
+          onChangeCallBack={(value: string) => setSearchValue(value)}
+        />
+        <div className="custom-table_tool-bar_dropdown">Drop down</div>
+      </div>
       <div className="claim-list_table-container">
         {/* <CustomTable rowItems={claims} headItems={claimsHeads} /> */}
         {handleTableRendering()}

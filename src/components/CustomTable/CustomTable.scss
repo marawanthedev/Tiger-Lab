@@ -1,16 +1,13 @@
-.claim-list {
+.custom-table {
   width: 100%;
-  height: auto;
-  padding: 0 12.5%;
 
-  &_table-container {
-    width: 100%;
-    height: auto;
-  }
   &_tool-bar {
     width: 100%;
     font-size: 3rem;
     min-height: 8rem;
     height: auto;
+  }
+  &_content {
+    margin-top: 2rem;
   }
 }
