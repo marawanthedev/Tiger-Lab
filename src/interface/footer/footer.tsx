@@ -1,10 +1,13 @@
+import { BaseInterface } from "constants/baseInterface";
 import React from "react";
 import { Link } from "react-router-dom";
 import "./footer.scss";
 
-const Footer = (): JSX.Element => {
+interface FooterProps extends BaseInterface {}
+
+const Footer = ({ title }: FooterProps): JSX.Element => {
   return (
-    <footer className="footer bg-primary">
+    <footer className="footer bg-primary" title={title}>
       <div className="container">
         <div className="row">
           <div className="footer-col">
@@ -23,7 +26,9 @@ const Footer = (): JSX.Element => {
             <h4>Viewing Services</h4>
             <ul>
               <li>
-                <Link to="/list">Claims List</Link>
+                <Link to="/list" title={`${title}-claims-list-link`}>
+                  Claims List
+                </Link>
               </li>
             </ul>
           </div>
@@ -31,7 +36,9 @@ const Footer = (): JSX.Element => {
             <h4>Creating Services</h4>
             <ul>
               <li>
-                <Link to="">Create Claim</Link>
+                <Link to="/" title={`${title}-create-claim-link`}>
+                  Create Claim
+                </Link>
               </li>
             </ul>
           </div>
