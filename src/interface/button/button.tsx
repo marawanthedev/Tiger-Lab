@@ -1,6 +1,7 @@
 import React from "react";
 import { BaseInterface } from "constants/baseInterface";
 import "./button.scss";
+import { ButtonTypes } from "constants/ButtonType";
 
 interface CustomButtonProps extends BaseInterface {
   innerText: string;
@@ -8,20 +9,12 @@ interface CustomButtonProps extends BaseInterface {
   backGroundColor?: string;
   boxShadow?: string;
   className?: string;
-  type?: any;
+  type?: ButtonTypes;
   width: string;
   height?: string;
-  margin?: string;
-  icon?: string;
   borderRadius?: string;
   onClick?: Function;
-  padding?: string;
-  border?: string;
-  fontWeight?: string;
-  fontSize?: string;
-  alignSelf?: string;
 }
-
 const CustomButton = ({
   backGroundColor,
   innerText,
@@ -29,14 +22,8 @@ const CustomButton = ({
   type,
   width,
   height,
-  margin,
   onClick,
   className,
-  padding,
-  border,
-  fontWeight,
-  fontSize,
-  alignSelf,
   title,
   ...rest
 }: CustomButtonProps) => {

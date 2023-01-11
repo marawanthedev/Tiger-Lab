@@ -15,9 +15,9 @@ import "./ClaimList.scss";
 export default function ClaimList() {
   const [claims, setClaims] = useState<any>();
   const [claimsHeads, setClaimsHeads] = useState<HeadCell[]>();
-  const [filteredClaims, setFilteredClaims] = useState<any[]>([]);
+  const [filteredClaims, setFilteredClaims] = useState([]);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [status, setStatus] = React.useState("");
+  const [status, setStatus] = React.useState<string>("");
 
   const statusOptions = [
     "Submitted",
@@ -32,7 +32,9 @@ export default function ClaimList() {
   };
 
   function addTotalAmountAttribute(claims: any) {
-    const claimsWithTotalAmount = claims.map((claim: any) => {
+    if (!claims) return;
+
+    const claimsWithTotalAmount = claims.map((claim: (typeof claims)[0]) => {
       return {
         ...claim,
         totalAmount: Math.round(
@@ -48,7 +50,6 @@ export default function ClaimList() {
         endpoint: "/claims",
         method: AxiosMethods.GET,
       });
-
       addTotalAmountAttribute(data);
     } catch (err) {
       console.error(err);
@@ -59,7 +60,7 @@ export default function ClaimList() {
     const sampleItem = claims[0];
     const keys = Object.keys(sampleItem || {});
 
-    const tableHead: HeadCell[] = keys.map((key: any) => {
+    const tableHead: HeadCell[] = keys.map((key: string) => {
       return {
         id: key,
         label: key,
@@ -87,14 +88,14 @@ export default function ClaimList() {
       );
   };
   const getMenuOptions = () => {
-    return statusOptions.map((statusOption) => (
-      <MenuItem value={statusOption} className="f-s-override">
+    return statusOptions.map((statusOption, index: number) => (
+      <MenuItem key={index} value={statusOption} className="f-s-override">
         {statusOption}
       </MenuItem>
     ));
   };
   const filterClaimsByStatus = () => {
-    const filteredClaims = claims.filter((claim: any) => {
+    const filteredClaims = claims.filter((claim: (typeof claims)[0]) => {
       if (claim.status.toLowerCase() === status.toLowerCase()) return claim;
     });
     setFilteredClaims(filteredClaims);
@@ -106,7 +107,7 @@ export default function ClaimList() {
     // 3- seach through policy number
     // if any of those 3 includes search value return it
 
-    const filteredClaims = claims.filter((claim: any) => {
+    const filteredClaims = claims.filter((claim: (typeof claims)[0]) => {
       if (
         String(claim.id).toLowerCase().includes(searchValue.toLowerCase()) ||
         String(claim.policeNumber)
@@ -148,7 +149,7 @@ export default function ClaimList() {
             type="text"
             className="input-field"
             placeholder="search claims"
-            onChange={(e: any) => setSearchValue(e.target.value)}
+            onChange={(e: React.FormEvent<HTMLInputElement>) => setSearchValue(e.currentTarget.value)}
           />
         </div>
         <div className="custom-table_tool-bar_dropdown">

@@ -4,16 +4,19 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 
 import { InputField } from "constants/InputFields";
+import { ButtonTypes } from "../../constants/ButtonType";
 import { CustomButton } from "../../interface";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./CustomForm.scss";
 
+import { ClaimValidationSchema, ClaimFormFields } from "pages/Claim/Claim";
+
 interface FormProps {
-  validationSchema: any;
-  initialValues: any;
+  validationSchema: ClaimValidationSchema;
+  initialValues: ClaimFormFields;
   inputFields: InputField[];
-  onSubmit: any;
+  onSubmit: Function;
 }
 
 function subtract6Months(date: Date) {
@@ -30,7 +33,7 @@ export default function CustomForm({
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const minDate = subtract6Months(moment().toDate());
 
-  const renderError = (message: any) => {
+  const renderError = (message: string) => {
     return <p className="input-field_error">{message}</p>;
   };
 
@@ -58,7 +61,7 @@ export default function CustomForm({
           minDate={minDate}
           maxDate={moment().toDate()}
           className="input-field"
-          onChange={(date: any) => setSelectedDate(date)}
+          onChange={(date: Date) => setSelectedDate(date)}
         />
       );
     }
@@ -73,27 +76,35 @@ export default function CustomForm({
       );
     });
   };
+  const handleReset = (resetForm: Function) => {
+    setTimeout(() => {
+      resetForm();
+    }, 1000);
+  };
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        console.log(values);
         onSubmit({ ...values, incidentDate: selectedDate });
       }}
     >
-      <Form>
-        <div className="form">
-          {renderInputFields()}
-          <CustomButton
-            innerText="Submit"
-            type="submit"
-            width="100%"
-            color="white"
-            onClick={() => console.log("x")}
-          />
-        </div>
-      </Form>
+      {(formProps) => {
+        return (
+          <Form>
+            <div className="form">
+              {renderInputFields()}
+              <CustomButton
+                innerText="Submit"
+                type={ButtonTypes.SUBMIT}
+                width="100%"
+                color="white"
+                onClick={handleReset.bind(null, formProps.resetForm)}
+              />
+            </div>
+          </Form>
+        );
+      }}
     </Formik>
   );
 }

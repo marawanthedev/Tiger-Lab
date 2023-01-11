@@ -6,10 +6,11 @@ import { iconMap, IconOptions } from "./constants";
 interface IconProps {
   type: IconOptions;
   style?: any;
+  className?: string;
   [rest: string]: any;
 }
 export default function Icon(props: IconProps) {
-  const { className, style, type, size, color, ...restProps } = props;
+  const { className, style, type, ...restProps } = props;
   const iconPath = iconMap?.[type];
   return (
     <span {...restProps} style={style}>

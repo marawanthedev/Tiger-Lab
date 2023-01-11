@@ -1,3 +1,5 @@
+import React from "react";
+
 export enum IconOptions {
   cross = "cross",
   tripleBars = "tripleBars",

@@ -15,5 +15,5 @@ export interface EnhancedTableProps {
 
 export interface EnhanceTableProps {
   tableItems: any[];
-  tableHeadItems: any[];
+  tableHeadItems: HeadCell[];
 }

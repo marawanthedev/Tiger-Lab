@@ -1,8 +1,9 @@
-import "./mobileNavBar.scss";
+import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "../../components";
 import { IconOptions } from "../../components/icon/constants";
+import "./mobileNavBar.scss";
 
 interface MobileNavBarProps {
   hidden: boolean;

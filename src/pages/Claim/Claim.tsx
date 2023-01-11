@@ -11,23 +11,23 @@ export interface ClaimFormFields {
   policyNumber: string;
   holder: string;
   insuredName: string;
-  claimAmount: string;
+  amount: string | number;
   description: string;
   incidentDate: Date;
-  processingFee: string;
+  processingFee: string | number;
 }
+export type ClaimValidationSchema = typeof validationSchema;
 
+const validationSchema = Yup.object({
+  policyNumber: Yup.string().required(),
+  holder: Yup.string().required(),
+  insuredName: Yup.string().required(),
+  amount: Yup.string().required(),
+  description: Yup.string().required(),
+  incidentDate: Yup.date().default(() => new Date()),
+  processingFee: Yup.string().required(),
+});
 export default function Claim() {
-  const validationSchema = Yup.object({
-    policyNumber: Yup.string().required(),
-    holder: Yup.string().required(),
-    insuredName: Yup.string().required(),
-    claimAmount: Yup.string().required(),
-    description: Yup.string().required(),
-    incidentDate: Yup.date().default(() => new Date()),
-    processingFee: Yup.string().required(),
-  });
-
   const inputFields: InputField[] = [
     {
       name: "policyNumber",
@@ -45,7 +45,7 @@ export default function Claim() {
       placholder: "Insured Item",
     },
     {
-      name: "claimAmount",
+      name: "amount",
       label: "Claim amount",
       placholder: "Claim amount 2 decimal point. e.g: 15.50",
     },
@@ -71,7 +71,7 @@ export default function Claim() {
     policyNumber: "",
     holder: "",
     insuredName: "",
-    claimAmount: "",
+    amount: "",
     description: "",
     incidentDate: new Date(),
     processingFee: "",
@@ -82,14 +82,14 @@ export default function Claim() {
 
   const handleFormSubmission = (values: ClaimFormFields) => {
     const processingFee = roundToTwoDigitDecimal(Number(values.processingFee));
-    const amount = roundToTwoDigitDecimal(Number(values.claimAmount));
+    const amount = roundToTwoDigitDecimal(Number(values.amount));
 
-    const valuesToPost = { ...values, processingFee, amount };
+    const valuesToPost: ClaimFormFields = { ...values, processingFee, amount };
 
     postNewClaim(valuesToPost);
   };
 
-  const postNewClaim = async (claim: any) => {
+  const postNewClaim = async (claim: ClaimFormFields) => {
     try {
       request({
         endpoint: "/claims",

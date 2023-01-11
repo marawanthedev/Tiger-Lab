@@ -68,7 +68,7 @@ export default function EnhancedTable({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  function getTableRowData(row: any) {
+  function getTableRowData(row: (typeof tableItems)[0]) {
     return Object.keys(row).map((key, index: number) => {
       if (index === 0)
         return (
@@ -189,7 +189,7 @@ export default function EnhancedTable({
                 <TableBody>
                   {stableSort(tableItems, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row: any, index) => {
+                    .map((row: (typeof tableItems)[0]) => {
                       const isItemSelected = isSelected(row.id);
 
                       return (
