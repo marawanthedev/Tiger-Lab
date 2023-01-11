@@ -5,6 +5,12 @@ import { CustomTable } from "../../components";
 import { HeadCell } from "components/CustomTable/constants";
 import { FormInput } from "../../interface";
 
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
 import "./ClaimList.scss";
 
 function createData(
@@ -20,8 +26,21 @@ function createData(
 export default function ClaimList() {
   const [claims, setClaims] = useState<any>();
   const [claimsHeads, setClaimsHeads] = useState<HeadCell[]>();
-  const [filtedClaims, setFilteredClaims] = useState<any[]>([]);
+  const [filteredClaims, setFilteredClaims] = useState<any[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
+  const [status, setStatus] = React.useState("");
+
+  const statusOptions = [
+    "Submitted",
+    "Approved",
+    "Processed",
+    "Completed",
+    "Rejected",
+  ];
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setStatus(event.target.value as string);
+  };
 
   async function fetchClaims() {
     const data = await request({
@@ -47,18 +66,35 @@ export default function ClaimList() {
     return tableHead;
   };
 
+  const getTableItems = () => {
+    if (searchValue !== "" || status !== "") return filteredClaims;
+    else return claims;
+  };
   const handleTableRendering = () => {
     if (!claims || !claimsHeads) return;
     if (claims && claimsHeads)
       return (
         <CustomTable
           tableHeadItems={claimsHeads}
-          tableItems={searchValue === "" ? claims : filtedClaims}
+          tableItems={getTableItems()}
         />
       );
   };
+  const getMenuOptions = () => {
+    return statusOptions.map((statusOption) => (
+      <MenuItem value={statusOption} className="f-s-override">
+        {statusOption}
+      </MenuItem>
+    ));
+  };
+  const filterClaimsByStatus = () => {
+    const filteredClaims = claims.filter((claim: any) => {
+      if (claim.status.toLowerCase() === status.toLowerCase()) return claim;
+    });
+    setFilteredClaims(filteredClaims);
+  };
   const handleTableItemsSearch = () => {
-    // goal
+    // Steps
     // 1- search through  claim id
     // 2- search through holderName
     // 3- seach through policy number
@@ -91,6 +127,10 @@ export default function ClaimList() {
       handleTableItemsSearch();
     }
   }, [searchValue]);
+  useEffect(() => {
+    if (claims) filterClaimsByStatus();
+  }, [status]);
+
   return (
     <div className="claim-list flex flex-column justify-content-center align-items-center">
       <div className="claim-list_tool-bar flex justify-content-between align-items-center">
@@ -99,7 +139,28 @@ export default function ClaimList() {
           placeholder="search claims"
           onChangeCallBack={(value: string) => setSearchValue(value)}
         />
-        <div className="custom-table_tool-bar_dropdown">Drop down</div>
+        <div className="custom-table_tool-bar_dropdown">
+          <Box sx={{ minWidth: 200 }}>
+            <FormControl fullWidth>
+              <InputLabel
+                id="demo-simple-select-label"
+                className="f-s-override"
+              >
+                Status
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={status}
+                label="Status"
+                onChange={handleChange}
+                className="f-s-override"
+              >
+                {getMenuOptions()}
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
       </div>
       <div className="claim-list_table-container">
         {/* <CustomTable rowItems={claims} headItems={claimsHeads} /> */}

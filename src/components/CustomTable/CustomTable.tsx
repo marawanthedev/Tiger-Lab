@@ -68,16 +68,6 @@ export default function EnhancedTable({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  function renderTableRows() {
-    return tableItems.map((row) => (
-      <TableRow
-        key={row.name}
-        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-      >
-        {getTableRowData(row)}
-      </TableRow>
-    ));
-  }
   function getTableRowData(row: any) {
     return Object.keys(row).map((key, index: number) => {
       if (index === 0)
@@ -86,14 +76,14 @@ export default function EnhancedTable({
             component="th"
             scope="row"
             align="left"
-            style={{ fontSize: "1.4rem" }}
+            className="f-s-override"
           >
             {row[key]}
           </TableCell>
         );
       else
         return (
-          <TableCell align="left" style={{ fontSize: "1.4rem" }}>
+          <TableCell align="left" className="f-s-override">
             {row[key]}
           </TableCell>
         );
@@ -116,7 +106,7 @@ export default function EnhancedTable({
               align={headCell.numeric ? "left" : "center"}
               padding={"normal"}
               sortDirection={orderBy === headCell.id ? order : false}
-              style={{ fontSize: "1.4rem" }}
+              className="f-s-override"
             >
               <TableSortLabel
                 active={orderBy === headCell.id}
@@ -236,7 +226,7 @@ export default function EnhancedTable({
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-              style={{ fontSize: "1.4rem" }}
+              className="f-s-override"
             />
           </Paper>
         </Box>
