@@ -12,5 +12,11 @@
     font-size: 3rem;
     min-height: 8rem;
     height: auto;
+    @media (max-width: 800px) {
+      flex-direction: column;
+      & > * {
+        margin: 1rem 0;
+      }
+    }
   }
 }

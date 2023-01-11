@@ -1,33 +1,26 @@
 .c-icon {
-	width: clamp(grid-baseline(3), grid-gutter(1), grid-baseline(4));
-	height: auto;
-	max-width: 100%;
-	max-height: 100%;
-	position: relative;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-	color: currentColor;
-	vertical-align: top;
-	width: 35px;
-	height: 35px;
-	caret-color: transparent;
-	// border: 1px solid red;
-	//	Elements
-	fill: white;
+  width: clamp(grid-baseline(3), grid-gutter(1), grid-baseline(4));
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: currentColor;
+  vertical-align: top;
+  width: 35px;
+  height: 35px;
+  caret-color: transparent;
+  fill: white;
 
-	@media (min-width:1280px) {
-		&:hover {
-			fill: #B3FE00;
-		}
-	}
+  @media (min-width: 1280px) {
+    &:hover {
+      fill: #b3fe00;
+    }
+  }
 
-
-
-
-
-	position: relative;
-	z-index: 2;
-
+  position: relative;
+  z-index: 2;
 }

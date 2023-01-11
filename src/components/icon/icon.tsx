@@ -2,9 +2,7 @@
 import React from "react";
 import "./icon.scss";
 import { iconMap, IconOptions } from "./constants";
-//
-//	RAYC / UI / Components / Icon
-//
+
 interface IconProps {
   type: IconOptions;
   style?: any;

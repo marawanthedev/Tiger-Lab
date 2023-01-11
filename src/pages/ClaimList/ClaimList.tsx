@@ -13,16 +13,6 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import "./ClaimList.scss";
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
 export default function ClaimList() {
   const [claims, setClaims] = useState<any>();
   const [claimsHeads, setClaimsHeads] = useState<HeadCell[]>();
@@ -140,7 +130,7 @@ export default function ClaimList() {
           onChangeCallBack={(value: string) => setSearchValue(value)}
         />
         <div className="custom-table_tool-bar_dropdown">
-          <Box sx={{ minWidth: 200 }}>
+          <Box sx={{ minWidth: 250 }}>
             <FormControl fullWidth>
               <InputLabel
                 id="demo-simple-select-label"
@@ -162,10 +152,7 @@ export default function ClaimList() {
           </Box>
         </div>
       </div>
-      <div className="claim-list_table-container">
-        {/* <CustomTable rowItems={claims} headItems={claimsHeads} /> */}
-        {handleTableRendering()}
-      </div>
+      <div className="claim-list_table-container">{handleTableRendering()}</div>
     </div>
   );
 }
