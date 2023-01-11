@@ -7,7 +7,7 @@ interface FooterProps extends BaseInterface {}
 
 const Footer = ({ title }: FooterProps): JSX.Element => {
   return (
-    <footer className="footer bg-primary" title={title}>
+    <footer className="footer bg-primary" title={title} role="navigation">
       <div className="container">
         <div className="row">
           <div className="footer-col">

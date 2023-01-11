@@ -1,3 +1,4 @@
+import { BaseInterface } from "constants/baseInterface";
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -5,12 +6,16 @@ import { Icon } from "../../components";
 import { IconOptions } from "../../components/icon/constants";
 import "./mobileNavBar.scss";
 
-interface MobileNavBarProps {
+interface MobileNavBarProps extends BaseInterface {
   hidden: boolean;
   menuOnClickCallBack: any;
 }
 
-const MobileNavBar = ({ hidden, menuOnClickCallBack }: MobileNavBarProps) => {
+const MobileNavBar = ({
+  hidden,
+  menuOnClickCallBack,
+  title,
+}: MobileNavBarProps) => {
   const [icon, setIcon] = useState(IconOptions.tripleBars);
 
   const navLinks = [
@@ -28,10 +33,16 @@ const MobileNavBar = ({ hidden, menuOnClickCallBack }: MobileNavBarProps) => {
       className={`navigation bg-primary  ${
         !hidden && "navigation__full flex flex-column"
       }`}
+      title={title}
+      role="navigation"
     >
       <div className="navigation__header  flex align-items-center bg-primary">
-        <div className="navigation__icon" onClick={menuOnClickCallBack}>
-          <Icon type={icon} />
+        <div
+          className="navigation__icon"
+          onClick={menuOnClickCallBack}
+          title={`${title}-icon-container`}
+        >
+          <Icon type={icon} title={`${title}-icon`} role="icon" />
         </div>
         <div className="navigation__header__content flex justify-content-between align-items-center ">
           <div className={`navigation__header__center`} />
@@ -52,6 +63,8 @@ const MobileNavBar = ({ hidden, menuOnClickCallBack }: MobileNavBarProps) => {
                     to={String(link.to)}
                     // to reset open state
                     onClick={menuOnClickCallBack}
+                    title={`${title}-link`}
+                    role="navigation"
                   >
                     {link.text}
                   </Link>
