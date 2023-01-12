@@ -1,0 +1,10 @@
+{
+   "useTabs": true,
+   "semi": false,
+   "singleQuote": true,
+   "jsxSingleQuote": true,
+   "trailingComma": "none",
+	 "parser": "typescript",
+   // v prípade ak je potrebné formátovať len označené súbory markerom @format
+   "requirePragma": true
+}
