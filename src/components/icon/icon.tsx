@@ -18,7 +18,6 @@ export default function Icon(props: IconProps) {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={`c-icon ${className}`}
-        viewBox="32 32 32"
         width="32px"
         height="32px"
       >

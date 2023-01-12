@@ -77,13 +77,14 @@ export default function EnhancedTable({
             scope="row"
             align="left"
             className="f-s-override"
+            key={index}
           >
             {row[key]}
           </TableCell>
         );
       else
         return (
-          <TableCell align="left" className="f-s-override">
+          <TableCell align="left" className="f-s-override" key={index}>
             {row[key]}
           </TableCell>
         );
@@ -100,7 +101,7 @@ export default function EnhancedTable({
     return (
       <TableHead>
         <TableRow>
-          {tableHeadItems.map((headCell: HeadCell) => (
+          {tableHeadItems.map((headCell: HeadCell, index: number) => (
             <TableCell
               key={headCell.id}
               align={headCell.numeric ? "left" : "center"}
@@ -112,6 +113,7 @@ export default function EnhancedTable({
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : "asc"}
                 onClick={createSortHandler(headCell.id)}
+                key={index}
               >
                 {headCell.label}
               </TableSortLabel>

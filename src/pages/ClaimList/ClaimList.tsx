@@ -67,7 +67,18 @@ export default function ClaimList() {
         numeric: typeof sampleItem[key] === "number" ? true : false,
       };
     });
-    tableHead.push({ id: "totalAmount", label: "Total Amount", numeric: true });
+    // ensuring that it was not there before
+    const totalAmountEntry = tableHead.find(
+      (head) => head.id === "totalAmount"
+    );
+
+    if (!totalAmountEntry) {
+      tableHead.push({
+        id: "totalAmount",
+        label: "Total Amount",
+        numeric: true,
+      });
+    }
 
     return tableHead;
   };
@@ -149,7 +160,9 @@ export default function ClaimList() {
             type="text"
             className="input-field"
             placeholder="search claims"
-            onChange={(e: React.FormEvent<HTMLInputElement>) => setSearchValue(e.currentTarget.value)}
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              setSearchValue(e.currentTarget.value)
+            }
           />
         </div>
         <div className="custom-table_tool-bar_dropdown">
