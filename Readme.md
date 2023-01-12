@@ -1,3 +1,7 @@
+# Note
+
+- for some reason backend consider current date as future input for add claim form
+
 # What else could be done? (outside of assesment scope)
 
 - if redux was used, could have added global api request status tracker and manage it using thunk api calls whenever a request is executed
