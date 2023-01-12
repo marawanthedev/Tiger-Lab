@@ -3,7 +3,6 @@ import { screen, render, fireEvent } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "@remix-run/router";
 import Navbar from "./Navbar";
-import { IconOptions } from "components/icon/constants";
 
 describe("navbar works properly", () => {
   const history = createBrowserHistory();

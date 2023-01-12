@@ -4,9 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import "./Navbar.scss";
 
-interface NavbarProps extends BaseInterface {}
-
-export default function Navbar({ title }: NavbarProps) {
+export default function Navbar({ title }: BaseInterface) {
   const navigate = useNavigate();
 
   const navLinks = [
@@ -28,12 +26,13 @@ export default function Navbar({ title }: NavbarProps) {
         </div>
         <div className="navbar_right-side flex flex-colum align-items-center">
           <div className="navbar_right-side__links">
-            {navLinks.map((link: (typeof navLinks)[0]) => {
+            {navLinks.map((link: (typeof navLinks)[0], index: number) => {
               return (
                 <Link
                   className="navbar_link"
                   to={link.to}
                   title={`${title}-link`}
+                  key={index}
                 >
                   {link.text}
                 </Link>
