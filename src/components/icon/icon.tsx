@@ -20,6 +20,8 @@ export default function Icon(props: IconProps) {
         className={`c-icon ${className}`}
         width="32px"
         height="32px"
+        xlinkTitle={`${title}-icon-path`}
+        role="icon-path"
       >
         {iconPath}
       </svg>
